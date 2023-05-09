@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import Layout from "./../../components/Layout/Layout";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import {toast} from "react-toastify";
-//import "../../styles/AuthStyles.css";
+import toast from "react-hot-toast";
+import "../../styles/AuthStyles.css";
 const Register = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -12,14 +12,14 @@ const Register = () => {
   const [address, setAddress] = useState("");
   const [answer, setAnswer] = useState("");
   const navigate = useNavigate();
+  axios.defaults.baseURL = "http://localhost:8080";
 
   // form function
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(name,email,password,address,phone);
-    toast.success("register succesfully")
+    
     try {
-      const res = await axios.post("/api/v1/auth/register", {
+      const res = await axios.post('/api/v1/auth/register', {
         name,
         email,
         password,
