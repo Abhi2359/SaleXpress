@@ -9,8 +9,10 @@ const ProductDetails = () => {
   const navigate = useNavigate();
   const [product, setProduct] = useState({});
   const [relatedProducts, setRelatedProducts] = useState([]);
+  axios.defaults.baseURL = "http://localhost:8080";
 
-  //initalp details
+
+  //initalproduct details
   useEffect(() => {
     if (params?.slug) getProduct();
   }, [params?.slug]);
