@@ -9,6 +9,7 @@ import Layout from "./../components/Layout/Layout";
 import { AiOutlineReload } from "react-icons/ai";
 import "../styles/Homepage.css";
 
+
 const HomePage = () => {
   const navigate = useNavigate();
  // const [cart, setCart] = useCart();
@@ -21,7 +22,7 @@ const HomePage = () => {
   const [loading, setLoading] = useState(false);
   axios.defaults.baseURL = "http://localhost:8080";
 
-
+  
   //get all cat
   const getAllCategory = async () => {
     try {
@@ -109,16 +110,11 @@ const HomePage = () => {
     }
   };
   return (
-    <Layout title={"ALl Products - Best offers "}>
+    <Layout title={"ALL Products - Best offers "}>
       {/* banner image */}
-      <img
-        src="/images/banner.png"
-        className="banner-img"
-        alt="bannerimage"
-        width={"100%"}
-      />
+    
       {/* banner image */}
-      <div className="container-fluid row mt-3 home-page">
+      <div className="container-fluid row mb-10 home-page">
         <div className="col-md-3 filters">
           <h4 className="text-center">Filter By Category</h4>
           <div className="d-flex flex-column">
