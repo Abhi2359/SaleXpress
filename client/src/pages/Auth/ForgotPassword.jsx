@@ -1,18 +1,26 @@
 import React, { useState } from "react";
-import Layout from "../../components/Layout/Layout";
+import {
+  Box,
+  Input,
+  FormControl,
+  FormLabel,
+  Button,
+  ChakraProvider,
+  useToast,
+} from "@chakra-ui/react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import toast from "react-hot-toast";
-import "../../styles/AuthStyles.css";
 
-const ForgotPasssword = () => {
+import Layout from "../../components/Layout/Layout";
+
+const ForgotPassword = () => {
   const [email, setEmail] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [answer, setAnswer] = useState("");
   axios.defaults.baseURL = "http://localhost:8080";
   const navigate = useNavigate();
+  const toast = useToast();
 
-  // form function
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -22,64 +30,93 @@ const ForgotPasssword = () => {
         answer,
       });
       if (res && res.data.success) {
-        toast.success(res.data && res.data.message);
+        toast({
+          title: "Password Reset",
+          description: res.data.message,
+          status: "success",
+          duration: 3000,
+          isClosable: true,
+        });
 
         navigate("/login");
       } else {
-        toast.error(res.data.message);
+        toast({
+          title: "Error",
+          description: res.data.message,
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+        });
       }
     } catch (error) {
       console.log(error);
-      toast.error("Something went wrong");
+      toast({
+        title: "Error",
+        description: "Something went wrong",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
     }
   };
+
   return (
     <Layout title={"Forgot Password - SaleXpress"}>
-      <div className="form-container ">
-        <form onSubmit={handleSubmit}>
-          <h4 className="title">RESET PASSWORD</h4>
+      <ChakraProvider>
+        <Box
+          display="flex"
+          flexDirection="column"
+          alignItems="center"
+          justifyContent="center"
+          minHeight="90vh"
+          bg="gray.100"
+          borderRadius="md"
+        >
+          <form  style={{ width: "300px" }} onSubmit={handleSubmit}>
 
-          <div className="mb-3">
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="form-control"
-              id="exampleInputEmail1"
-              placeholder="Enter Your Email "
-              required
-            />
-          </div>
-          <div className="mb-3">
-            <input
-              type="text"
-              value={answer}
-              onChange={(e) => setAnswer(e.target.value)}
-              className="form-control"
-              id="exampleInputEmail1"
-              placeholder="Enter Your favorite Sport Name "
-              required
-            />
-          </div>
-          <div className="mb-3">
-            <input
-              type="password"
-              value={newPassword}
-              onChange={(e) => setNewPassword(e.target.value)}
-              className="form-control"
-              id="exampleInputPassword1"
-              placeholder="Enter Your Password"
-              required
-            />
-          </div>
+            <FormControl mb="3" isRequired>
+            <FormLabel>Email</FormLabel>
+              <Input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Enter Your Email"
+                isRequired
+              />
+            </FormControl>
 
-          <button type="submit" className="btn btn-primary">
-            RESET
-          </button>
-        </form>
-      </div>
+            <FormControl mb="3" isRequired>
+            <FormLabel>Answer</FormLabel>
+
+              <Input
+                type="text"
+                value={answer}
+                onChange={(e) => setAnswer(e.target.value)}
+                placeholder="Enter Your Favorite Sport Name"
+                isRequired
+              />
+            </FormControl>
+
+            <FormControl mb="3" isRequired>
+            <FormLabel>Password</FormLabel>
+
+              <Input
+                type="password"
+                value={newPassword}
+                onChange={(e) => setNewPassword(e.target.value)}
+                placeholder="Enter Your New Password"
+            
+              />
+            </FormControl>
+
+            <Button type="submit" colorScheme="blue" size="md" width="full">
+              Reset Password
+            </Button>
+          </form>
+        </Box>
+      </ChakraProvider>
     </Layout>
   );
 };
 
-export default ForgotPasssword;
+export default ForgotPassword;

@@ -11,16 +11,20 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@chakra-ui/react": "^2.8.0",
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
     "antd": "^5.5.0",
     "axios": "^1.4.0",
+    "framer-motion": "^10.15.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-helmet": "^6.1.0",
     "react-hot-toast": "^2.4.0",
     "react-icons": "^4.8.0",
     "react-router-dom": "^6.11.1",
-    "react-toast-notifications": "^2.5.1",
-    "react-toastify": "^9.1.1"
+    "react-toastify": "^9.1.1",
+    "zxcvbn": "^4.4.2"
   },
   "devDependencies": {
     "@types/react": "^18.0.28",

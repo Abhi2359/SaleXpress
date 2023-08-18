@@ -2,13 +2,14 @@ import React from "react";
 import { NavLink, Link ,useNavigate} from "react-router-dom";
 import { GiShop } from "react-icons/gi";
 import { useAuth } from "../../context/auth";
+ import { useToast } from "@chakra-ui/react";
 
-import toast from "react-hot-toast";
 import SearchInput from "../Form/SearchInput";
 const Header = () => {
 
   const [auth, setAuth] = useAuth();
   const navigate = useNavigate();
+  const toast = useToast
   const handleLogout = () => {
     setAuth({
       ...auth,
@@ -16,13 +17,19 @@ const Header = () => {
       token: "",
     });
     localStorage.removeItem("auth");
-    toast.success("Logout Successfully");
+    toast({
+      title: "Logout Successfully",
+      description: res.data.message,
+      status: "success",
+      duration: 3000,
+      isClosable: true,
+    });
     
   navigate("/login")
   };
   return (
     <>
-      <nav className="navbar navbar-expand-lg bg-body-tertiary">
+      <nav className="navbar sticky-top navbar-expand-lg bg-body-tertiary ">
         <div className="container-fluid">
           <button
             className="navbar-toggler"
