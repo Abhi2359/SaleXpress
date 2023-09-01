@@ -323,15 +323,16 @@ const Register = () => {
               borderRadius: "5px",
               padding: "10px",
               cursor: isFormValid ? "pointer" : "not-allowed",
+              width:"fit-content"
             }}
           >
             Register
           </button>
-          <ModalComponent
+          {/* <ModalComponent
             isOpen={showSuccessModal}
             onClose={handleCloseSuccessModal}
             Name={name}
-          />
+          /> */}
         </Box>
       </ChakraProvider>
     </Layout>
