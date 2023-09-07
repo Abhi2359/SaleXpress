@@ -5,6 +5,7 @@ import toast from "react-hot-toast";
 import axios from "axios";
 import CategoryForm from "../../components/Form/CategoryForm";
 import { Modal } from "antd";
+import { useToast } from "@chakra-ui/react";
 axios.defaults.baseURL = "http://localhost:8080";
 const CreateCategory = () => {
   const [categories, setCategories] = useState([]);
@@ -12,6 +13,7 @@ const CreateCategory = () => {
   const [visible, setVisible] = useState(false);
   const [selected, setSelected] = useState(null);
   const [updatedName, setUpdatedName] = useState("");
+  const toast = useToast();
   //handle Form
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -20,10 +22,22 @@ const CreateCategory = () => {
         name,
       });
       if (data?.success) {
-        toast.success(`${name} is created`);
+        toast({
+          title: `${name} is created`,
+
+          status: "success",
+          duration: 2000,
+          isClosable: true,
+        });
         getAllCategory();
       } else {
-        toast.error(data.message);
+        toast({
+          title: data.message,
+
+          status: "error",
+          duration: 2000,
+          isClosable: true,
+        });
       }
     } catch (error) {
       console.log(error);
@@ -36,11 +50,17 @@ const CreateCategory = () => {
     try {
       const { data } = await axios.get("/api/v1/category/get-category");
       if (data?.success) {
-        setCategories(data?.category);
+        setCategories([...(data?.category || [])]);
       }
     } catch (error) {
       console.log(error);
-      toast.error("Something wwent wrong in getting catgeory");
+      toast({
+        title: "An error occured",
+        description: "Something went wrong while getting category",
+        status: "error",
+        duration: 2000,
+        isClosable: true,
+      });
     }
   };
 
@@ -57,13 +77,25 @@ const CreateCategory = () => {
         { name: updatedName }
       );
       if (data?.success) {
-        toast.success(`${updatedName} is updated`);
+        toast({
+          title: `${updatedName} is updated`,
+
+          status: "success",
+          duration: 2000,
+          isClosable: true,
+        });
         setSelected(null);
         setUpdatedName("");
         setVisible(false);
         getAllCategory();
       } else {
-        toast.error(data.message);
+        toast({
+          title: data.message,
+
+          status: "error",
+          duration: 2000,
+          isClosable: true,
+        });
       }
     } catch (error) {
       console.log(error);
@@ -76,14 +108,31 @@ const CreateCategory = () => {
         `/api/v1/category/delete-category/${pId}`
       );
       if (data.success) {
-        toast.success(`category is deleted`);
+        toast({
+          title: "Category is deleted",
 
+          status: "success",
+          duration: 2000,
+          isClosable: true,
+        });
         getAllCategory();
       } else {
-        toast.error(data.message);
+        toast({
+          title: data.message,
+
+          status: "error",
+          duration: 2000,
+          isClosable: true,
+        });
       }
     } catch (error) {
-      toast.error("Somtihing went wrong");
+      toast({
+        title: "An unexpected error occured",
+
+        status: "error",
+        duration: 2000,
+        isClosable: true,
+      });
     }
   };
   return (
